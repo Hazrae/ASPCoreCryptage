@@ -74,12 +74,14 @@ namespace ToDo_DAL.Services
                 {
                     User u = new User();
                     //creation de la liste en bouclant sur le DR
-                    dr.Read();
-                    u.Id = (int)dr["id"];
-                    u.Firstname = dr["firstname"].ToString();
-                    u.Lastname = dr["lastname"].ToString();
-                    u.Email = dr["email"].ToString();
-                    u.Password = dr["password"].ToString();
+                    if (dr.Read())
+                    {
+                        u.Id = (int)dr["id"];
+                        u.Firstname = dr["firstname"].ToString();
+                        u.Lastname = dr["lastname"].ToString();
+                        u.Email = dr["email"].ToString();
+                        u.Password = dr["password"].ToString();
+                    }
 
                     Handler.ConnecDB.Close();
                     return u;

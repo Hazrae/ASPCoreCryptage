@@ -47,7 +47,7 @@ namespace ASPCoreToDo.Controllers
             {
                 Instance.Post<User>("User/", u);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             catch
             {
@@ -70,9 +70,9 @@ namespace ASPCoreToDo.Controllers
             {
                 // aller voir dans la db si user est là
                User userCheck = Instance.PostWithReturn<LoginUser>("UserLogin/", u);
-                if(userCheck is null)
-                {
-                    return View();
+                if(userCheck.Id == 0)
+                {                   
+                    return RedirectToAction("Create", "User");
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace ASPCoreToDo.Controllers
 
                 }
 
-                return RedirectToAction("Index","ToDoGenerated");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

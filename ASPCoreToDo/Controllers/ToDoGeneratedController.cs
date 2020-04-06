@@ -50,6 +50,7 @@ namespace ASPCoreToDo.Controllers
         {
             try
             {
+                td.UserId = _sessionManager.Id;
                 instance.Post<ToDo>("ToDo/", td);
 
                 return RedirectToAction(nameof(Index));

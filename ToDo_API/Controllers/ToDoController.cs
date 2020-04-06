@@ -44,10 +44,9 @@ namespace ToDo_API.Controllers
 
         [HttpPost]
         [Route("api/ToDo/")]
-        public ToDo Post(ToDo t)
+        public void Post(ToDo t)
         {
             ToDoServices.Instance.Create(t);
-            return t;
         }
 
         [HttpPut]

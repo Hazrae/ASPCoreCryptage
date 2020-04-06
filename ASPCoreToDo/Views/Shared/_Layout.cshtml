@@ -1,9 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using ASPCoreToDo.Infrastructure
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ISessionManager _session
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ASPCoreToDo</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -22,25 +28,26 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ToDo" asp-action="ToDo">ToDo</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ToDoGenerated" asp-action="Index">Mes ToDo's</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Create">Register</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
-                        </li>    
-                                        
-                        <li class="nav-item" >
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Deconnexion">Deconnexion</a>
                         </li>
-                            
+
+                        @{
+                            //if (HttpContextAccessor.HttpContext.Session.GetInt32("Id").HasValue)
+                            if(_session.Id != -1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="ToDoGenerated" asp-action="Index">Mes ToDo's</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Deconnexion">Deconnexion</a>
+                                </li>
+                            }
+
+                        }
+
                     </ul>
                 </div>
             </div>

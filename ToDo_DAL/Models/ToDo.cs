@@ -12,6 +12,6 @@ namespace ToDo_DAL.Models
         public string Title { get; set; }
         public string Descr { get; set; }
         public bool State { get; set; }
-        public DateTime? ValidationDate { get; set; }
+        public int UserId { get; set; }
     }
 }

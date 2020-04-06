@@ -35,23 +35,19 @@ namespace ToDo_DAL.Services
         //Create via procédure stockée
         public void Create(ToDo t)
         {
-            using (SqlCommand cmd = new SqlCommand("InsertToDo", Handler.ConnecDB))
+            using (SqlCommand command = Handler.ConnecDB.CreateCommand())
             {
-                
-                cmd.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "insert into [ToDo] (title,descr,state,userId) " +
+                    "values (@t,@d,@s,@u)";
 
-                cmd.Parameters.AddWithValue("title", t.Title);
-                cmd.Parameters.AddWithValue("descr", t.Descr);
-                cmd.Parameters.AddWithValue("state", t.State);
+                command.Parameters.AddWithValue("t", t.Title);
+                command.Parameters.AddWithValue("d", t.Descr);
+                command.Parameters.AddWithValue("s", t.State);
+                command.Parameters.AddWithValue("u", t.UserId);
 
                 Handler.ConnecDB.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                reader.Read();
-                t.Id = (int)reader["Id"];
-                t.ValidationDate = (reader["ValidationDate"] is DBNull)? null : (DateTime?)reader["validationDate"];
-
+                command.ExecuteScalar();
                 Handler.ConnecDB.Close();
-
             }
 
         }
@@ -162,7 +158,6 @@ namespace ToDo_DAL.Services
                     todo.Title = dr["title"].ToString();
                     todo.Descr = dr["descr"].ToString();
                     todo.State = (bool)dr["state"];
-                    todo.ValidationDate = (!(dr["ValidationDate"] is DBNull)) ? (DateTime?)dr["validationDate"] : null;
                 }
             }
             Handler.ConnecDB.Close();
