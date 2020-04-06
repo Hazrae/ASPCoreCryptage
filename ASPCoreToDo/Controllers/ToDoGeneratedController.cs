@@ -27,14 +27,6 @@ namespace ASPCoreToDo.Controllers
             return View(instance.Get<List<ToDo>>("ToDoByUser/",_sessionManager.Id));
         }
 
-        // GET: ToDoGenerated/Details/5
-        public ActionResult Details(int id)
-        {
-            if (_sessionManager.Id == -1)
-                return RedirectToAction("Login", "User");
-            return View(instance.Get<ToDo>("ToDo/",id));
-        }
-
         // GET: ToDoGenerated/Create
         public ActionResult Create()
         {
@@ -60,7 +52,25 @@ namespace ASPCoreToDo.Controllers
                 return View();
             }
         }
+        
+        // GET: ToDoGenerated/Details/5
+        public ActionResult Details(int id)
+        {
+            if (_sessionManager.Id == -1)
+                return RedirectToAction("Login", "User");
+            return View(instance.Get<ToDo>("ToDo/",id));
+        }
 
+        // GET: ToDoGenerated/Delete/5
+        public ActionResult Delete(int id)
+        {
+            if (_sessionManager.Id == -1)
+                return RedirectToAction("Login", "User");
+            instance.Delete("ToDo/", id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        /*
         // GET: ToDoGenerated/Edit/5
         public ActionResult Edit(int id)
         {
@@ -84,16 +94,7 @@ namespace ASPCoreToDo.Controllers
             {
                 return View();
             }
-        }
-
-        // GET: ToDoGenerated/Delete/5
-        public ActionResult Delete(int id)
-        {
-            if (_sessionManager.Id == -1)
-                return RedirectToAction("Login", "User");
-            instance.Delete("ToDo/", id);
-            return RedirectToAction(nameof(Index));
-        }
-
+        }        
+        */
     }
 }

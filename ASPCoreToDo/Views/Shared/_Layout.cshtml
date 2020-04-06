@@ -27,16 +27,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Create">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
-                        </li>
+                        @{
+                            //if (HttpContextAccessor.HttpContext.Session.GetInt32("Id").HasValue)
+                            if (_session.Id == -1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Create">Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                                </li>
+                            }
+                         }
 
                         @{
                             //if (HttpContextAccessor.HttpContext.Session.GetInt32("Id").HasValue)
-                            if(_session.Id != -1)
+                            if (_session.Id != -1)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="ToDoGenerated" asp-action="Index">Mes ToDo's</a>
@@ -46,9 +52,9 @@
                                 </li>
                             }
 
-                        }
+                         }
 
-                    </ul>
+                            </ul>
                 </div>
             </div>
         </nav>

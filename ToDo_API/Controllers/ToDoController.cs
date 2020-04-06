@@ -40,8 +40,7 @@ namespace ToDo_API.Controllers
         {
             return ToDoServices.Instance.GetOne(id);
         }
-
-
+        
         [HttpPost]
         [Route("api/ToDo/")]
         public void Post(ToDo t)

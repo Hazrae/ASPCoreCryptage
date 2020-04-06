@@ -34,8 +34,7 @@ namespace ToDo_API.Controllers
         {
             return UserServices.Instance.GetOne(u);
         }
-
-
+        
         [HttpPost]
         [Route("api/User/")]
         public User Post(User u)

@@ -26,13 +26,11 @@ namespace ToDo_DAL.Services
             }
 
         }
-
         private ToDoServices()
         {
 
         }
-
-        //Create via procédure stockée
+                
         public void Create(ToDo t)
         {
             using (SqlCommand command = Handler.ConnecDB.CreateCommand())
@@ -52,21 +50,18 @@ namespace ToDo_DAL.Services
 
         }
 
-        //Delete via procédure stockée
         public void Delete(int id)
         {
-            using (SqlCommand cmd = new SqlCommand("DeleteToDo", Handler.ConnecDB))
+            Handler.ConnecDB.Open();
+            using (SqlCommand cmd = Handler.ConnecDB.CreateCommand())
             {
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
+                cmd.CommandText = "DELETE FROM ToDo WHERE id = @id";
                 cmd.Parameters.AddWithValue("id", id);
-
-                Handler.ConnecDB.Open();
                 cmd.ExecuteNonQuery();
                 Handler.ConnecDB.Close();
 
-            }
+            }             
+            
         }
 
         public List<ToDo> GetAll()
@@ -164,23 +159,11 @@ namespace ToDo_DAL.Services
             return todo;
         }
 
+        
         public void Update(ToDo t)
         {
-            using (SqlCommand cmd = new SqlCommand("updateToDo", Handler.ConnecDB))
-            {
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("id", t.Id);
-                cmd.Parameters.AddWithValue("title", t.Title);
-                cmd.Parameters.AddWithValue("descr", t.Descr);
-                cmd.Parameters.AddWithValue("state", t.State);
-
-                Handler.ConnecDB.Open();
-                cmd.ExecuteNonQuery();
-                Handler.ConnecDB.Close();
-
-            }
+             throw new NotImplementedException();
         }
+        
     }
 }

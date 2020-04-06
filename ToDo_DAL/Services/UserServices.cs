@@ -41,21 +41,6 @@ namespace ToDo_DAL.Services
             }
         }
 
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<User> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetOne(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public User GetOne(User user)
         {
             Handler.ConnecDB.Open();
@@ -63,7 +48,7 @@ namespace ToDo_DAL.Services
             //creation de la cmd
             using (SqlCommand cmd = Handler.ConnecDB.CreateCommand())
             {
-               
+
                 cmd.CommandText = "SELECT * FROM [User] WHERE email=@mail and [password] = @pw";
 
                 cmd.Parameters.AddWithValue("mail", user.Email);
@@ -90,6 +75,22 @@ namespace ToDo_DAL.Services
             }
         }
 
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<User> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetOne(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+       
         public void Update(User t)
         {
             throw new NotImplementedException();
