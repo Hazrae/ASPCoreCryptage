@@ -1,22 +1,17 @@
 ﻿@model ASPCoreToDo.Models.ToDo
 
 @{
-    ViewData["Title"] = "ToDoEdit";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>ToDoEdit</h1>
+<h1>Edit</h1>
 
 <h4>ToDo</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="ToDoEdit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>        
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
@@ -31,7 +26,7 @@
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="State" /> @Html.DisplayNameFor(model => model.State)
                 </label>
-            </div>
+            </div>        
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

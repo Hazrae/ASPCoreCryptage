@@ -22,12 +22,6 @@ namespace ToDo_API.Controllers
             }
         }
                   
-        [Route("api/User/{id:int}")]
-        public User GetOne(int id)
-        {
-            return UserServices.Instance.GetOne(id);
-        }
-
         [HttpPost]
         [Route("api/UserLogin/")]
         public User GetLogin(User u)

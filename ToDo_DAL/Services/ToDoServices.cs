@@ -162,7 +162,19 @@ namespace ToDo_DAL.Services
         
         public void Update(ToDo t)
         {
-             throw new NotImplementedException();
+            using (SqlCommand command = Handler.ConnecDB.CreateCommand())
+            {
+                command.CommandText = "update [ToDo] set title= @t,descr = @d,state = @s where id = @id";
+
+                command.Parameters.AddWithValue("t", t.Title);
+                command.Parameters.AddWithValue("d", t.Descr);
+                command.Parameters.AddWithValue("s", t.State);               
+                command.Parameters.AddWithValue("id", t.Id);
+
+                Handler.ConnecDB.Open();
+                command.ExecuteScalar();
+                Handler.ConnecDB.Close();
+            }
         }
         
     }

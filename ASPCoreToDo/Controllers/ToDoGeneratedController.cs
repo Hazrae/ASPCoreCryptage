@@ -70,7 +70,7 @@ namespace ASPCoreToDo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        /*
+        
         // GET: ToDoGenerated/Edit/5
         public ActionResult Edit(int id)
         {
@@ -82,7 +82,7 @@ namespace ASPCoreToDo.Controllers
         // POST: ToDoGenerated/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ToDo td)
+        public ActionResult Edit(ToDo td)
         {
             try
             {
@@ -95,6 +95,6 @@ namespace ASPCoreToDo.Controllers
                 return View();
             }
         }        
-        */
+        
     }
 }
