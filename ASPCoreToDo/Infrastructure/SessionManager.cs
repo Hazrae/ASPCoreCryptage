@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ASPCoreToDo.Models;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace ASPCoreToDo.Infrastructure
 {
@@ -31,6 +33,17 @@ namespace ASPCoreToDo.Infrastructure
         {
             get { return (Session.GetString(nameof(Email)) is null) ? "" : Session.GetString(nameof(Email)); }
             set { Session.SetString(nameof(Email), value); }
+        }
+
+        // stockage d'un user dans une variable de session => serialiser en json pour le stocker comme un string
+        public User User
+        {            
+            get
+            {
+                string json = Session.GetString(nameof(User));
+                return (json is null) ? null : JsonConvert.DeserializeObject<User>(json);
+            }
+            set { Session.SetString(nameof(User), JsonConvert.SerializeObject(value)); }
         }
 
         public void Abandon()

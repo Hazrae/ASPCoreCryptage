@@ -58,7 +58,7 @@ namespace ToDo_DAL.Services
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     User u = new User();
-                    //creation de la liste en bouclant sur le DR
+                 
                     if (dr.Read())
                     {
                         u.Id = (int)dr["id"];

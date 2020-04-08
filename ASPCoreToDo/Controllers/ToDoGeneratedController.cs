@@ -10,28 +10,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPCoreToDo.Controllers
 {
-    public class ToDoGeneratedController : Controller
+    [AuthRequired]
+    public class ToDoGeneratedController : ControllerBase
     {
-        private APIConsume instance;
-        private ISessionManager _sessionManager;
-        public ToDoGeneratedController(APIConsume api, ISessionManager sessionManager)
+        private APIConsume instance;   
+        public ToDoGeneratedController(APIConsume api, ISessionManager sessionManager): base(sessionManager)
         {
-            instance = api;
-            _sessionManager = sessionManager;
+            instance = api;         
         }
-        // GET: ToDoGenerated
+        
         public ActionResult Index()
-        {
-            if (_sessionManager.Id == -1)
-                return RedirectToAction("Login", "User");
-            return View(instance.Get<List<ToDo>>("ToDoByUser/",_sessionManager.Id));
+        {            
+            return View(instance.Get<List<ToDo>>("ToDoByUser/",SessionManager.Id));
         }
 
         // GET: ToDoGenerated/Create
         public ActionResult Create()
-        {
-            if (_sessionManager.Id == -1)
-                return RedirectToAction("Login", "User");
+        {      
             return View();
         }
 
@@ -42,7 +37,7 @@ namespace ASPCoreToDo.Controllers
         {
             try
             {
-                td.UserId = _sessionManager.Id;
+                td.UserId = SessionManager.Id;
                 instance.Post<ToDo>("ToDo/", td);
 
                 return RedirectToAction(nameof(Index));
@@ -55,17 +50,13 @@ namespace ASPCoreToDo.Controllers
         
         // GET: ToDoGenerated/Details/5
         public ActionResult Details(int id)
-        {
-            if (_sessionManager.Id == -1)
-                return RedirectToAction("Login", "User");
+        {     
             return View(instance.Get<ToDo>("ToDo/",id));
         }
 
         // GET: ToDoGenerated/Delete/5
         public ActionResult Delete(int id)
-        {
-            if (_sessionManager.Id == -1)
-                return RedirectToAction("Login", "User");
+        {       
             instance.Delete("ToDo/", id);
             return RedirectToAction(nameof(Index));
         }
@@ -73,9 +64,7 @@ namespace ASPCoreToDo.Controllers
         
         // GET: ToDoGenerated/Edit/5
         public ActionResult Edit(int id)
-        {
-            if (_sessionManager.Id == -1)
-                return RedirectToAction("Login", "User");
+        {          
             return View(instance.Get<ToDo>("ToDo/", id));
         }
 
@@ -87,7 +76,6 @@ namespace ASPCoreToDo.Controllers
             try
             {
                 instance.Put<ToDo>("ToDo/", td);
-
                 return RedirectToAction(nameof(Index));
             }
             catch

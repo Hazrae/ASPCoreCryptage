@@ -29,7 +29,7 @@
                         </li>
                         @{
                             //if (HttpContextAccessor.HttpContext.Session.GetInt32("Id").HasValue)
-                            if (_session.Id == -1)
+                            if (ViewBag.IsLogged == false)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Create">Register</a>
@@ -38,11 +38,7 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                                 </li>
                             }
-                         }
-
-                        @{
-                            //if (HttpContextAccessor.HttpContext.Session.GetInt32("Id").HasValue)
-                            if (_session.Id != -1)
+                            else
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="ToDoGenerated" asp-action="Index">Mes ToDo's</a>

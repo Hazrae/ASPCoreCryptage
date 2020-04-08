@@ -11,28 +11,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPCoreToDo.Controllers
 {
-    public class UserController : Controller
+    [AnonymousRequired]
+    public class UserController : ControllerBase
     {
-        private APIConsume Instance;
-        private ISessionManager _sessionManager;
-        public UserController(APIConsume api, ISessionManager sessionManager)
+        private APIConsume Instance;      
+        public UserController(APIConsume api, ISessionManager sessionManager): base(sessionManager)
         {
-            Instance = api;
-            _sessionManager = sessionManager;
-        }
-        // GET: User
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: User/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+            Instance = api;   
+        }             
 
         // GET: User/Create
+        //Register
         public ActionResult Create()
         {
             return View();
@@ -45,17 +34,24 @@ namespace ASPCoreToDo.Controllers
         {
             try
             {
-                Instance.Post<User>("User/", u);
-
-                return RedirectToAction("Index", "Home");
+                if (ModelState.IsValid)
+                {
+                    Instance.Post<User>("User/", u);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View(u);
+                }
             }
             catch
             {
-                return View();
+                return View(u);
             }
         }
 
         // GET: User/Create
+        //Login
         public ActionResult Login()
         {
             return View();
@@ -68,78 +64,35 @@ namespace ASPCoreToDo.Controllers
         {
             try
             {
-                // aller voir dans la db si user est là
-               User userCheck = Instance.PostWithReturn<LoginUser>("UserLogin/", u);
-                if(userCheck.Id == 0)
-                {                   
-                    return RedirectToAction("Create", "User");
-                }
-                else
+                if (ModelState.IsValid)
                 {
-                    _sessionManager.Id = userCheck.Id;
-                    _sessionManager.Firstname = userCheck.Firstname;
-                    _sessionManager.Lastname = userCheck.Lastname;
-                    _sessionManager.Email = userCheck.Email;
-
+                    User userCheck = Instance.PostWithReturn<LoginUser>("UserLogin/", u);
+                    if (userCheck.Id == 0)
+                    {
+                        return RedirectToAction("Create", "User");
+                    }
+                    else
+                    {
+                        SessionManager.Id = userCheck.Id;
+                        SessionManager.Firstname = userCheck.Firstname;
+                        SessionManager.Lastname = userCheck.Lastname;
+                        SessionManager.Email = userCheck.Email;
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
 
-                return RedirectToAction("Index", "Home");
+                return View(u);
+                
             }
             catch
             {
-                return View();
+                return View(u);
             }
-        }
-
-        // GET: User/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: User/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: User/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: User/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        }        
 
         public ActionResult Deconnexion()
         {
-            _sessionManager.Abandon();
+            SessionManager.Abandon();
             return RedirectToAction("Index", "Home");
         }
     }
