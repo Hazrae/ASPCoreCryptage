@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,7 @@ namespace ToDo_DAL.Services
 
         public void Create(User t)
         {
+            /*
             using (SqlCommand command = Handler.ConnecDB.CreateCommand())
             {
                 command.CommandText = "insert into [User] (firstname,lastname,email,[password]) output inserted.id " +
@@ -38,12 +40,55 @@ namespace ToDo_DAL.Services
                 Handler.ConnecDB.Open();
                 t.Id = (int)command.ExecuteScalar();
                 Handler.ConnecDB.Close();
+            }*/
+
+            using (SqlCommand cmd = new SqlCommand("RegisterUser", Handler.ConnecDB))
+            {
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("LastName", t.Lastname);
+                cmd.Parameters.AddWithValue("FirstName", t.Firstname);
+                cmd.Parameters.AddWithValue("Email", t.Email);
+                cmd.Parameters.AddWithValue("Passwd", t.Password);
+
+                Handler.ConnecDB.Open();
+                cmd.ExecuteNonQuery();
+                Handler.ConnecDB.Close();
+
             }
         }
 
         public User GetOne(User user)
         {
-            Handler.ConnecDB.Open();
+
+            using (SqlCommand cmd = new SqlCommand("LoginUser", Handler.ConnecDB))
+            {
+
+                cmd.CommandType = CommandType.StoredProcedure;
+               
+                cmd.Parameters.AddWithValue("Email", user.Email);
+                cmd.Parameters.AddWithValue("Passwd", user.Password);
+
+                Handler.ConnecDB.Open();
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    User u = new User();
+
+                    if (dr.Read())
+                    {
+                        u.Id = (int)dr["id"];
+                        u.Firstname = dr["firstname"].ToString();
+                        u.Lastname = dr["lastname"].ToString();
+                        u.Email = dr["email"].ToString();                     
+                    }
+
+                    Handler.ConnecDB.Close();
+                    return u;
+                }
+
+            }
+            /*Handler.ConnecDB.Open();
 
             //creation de la cmd
             using (SqlCommand cmd = Handler.ConnecDB.CreateCommand())
@@ -72,7 +117,7 @@ namespace ToDo_DAL.Services
                     return u;
                 }
 
-            }
+            }*/
         }
 
         public void Delete(int id)
