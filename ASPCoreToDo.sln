@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo_API", "ToDo_API\ToDo_A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo_DAL", "ToDo_DAL\ToDo_DAL.csproj", "{9C80972F-964C-4A2E-9A22-DC5A090FD914}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolBox", "ToolBox\ToolBox.csproj", "{7B11CB2B-A215-472B-BDEC-C85DB5C7D002}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APICore", "APICore\APICore.csproj", "{48E78B35-B0C3-4A08-AFA6-86412663AEBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{9C80972F-964C-4A2E-9A22-DC5A090FD914}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C80972F-964C-4A2E-9A22-DC5A090FD914}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C80972F-964C-4A2E-9A22-DC5A090FD914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B11CB2B-A215-472B-BDEC-C85DB5C7D002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B11CB2B-A215-472B-BDEC-C85DB5C7D002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B11CB2B-A215-472B-BDEC-C85DB5C7D002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B11CB2B-A215-472B-BDEC-C85DB5C7D002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48E78B35-B0C3-4A08-AFA6-86412663AEBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48E78B35-B0C3-4A08-AFA6-86412663AEBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48E78B35-B0C3-4A08-AFA6-86412663AEBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48E78B35-B0C3-4A08-AFA6-86412663AEBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

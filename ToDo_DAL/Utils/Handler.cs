@@ -9,7 +9,7 @@ namespace ToDo_DAL.Utils
 {
     public static class Handler
     {
-        private const string stringConnec = @"Data Source=KEVIN-PC\SQLSERVER;Initial Catalog=ToDoSession;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private const string stringConnec = @"Data Source=DESKTOP-7ND5R6T;Initial Catalog=ToDoSession;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         private static SqlConnection _connecDB;
 

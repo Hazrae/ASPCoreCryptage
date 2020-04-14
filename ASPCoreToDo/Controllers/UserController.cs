@@ -7,19 +7,20 @@ using ASPCoreToDo.Models;
 using ASPCoreToDo.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using ToolBox.Cryptography;
 
 namespace ASPCoreToDo.Controllers
 {
     [AnonymousRequired]
     public class UserController : ControllerBase
     {
-        private APIConsume Instance;      
+        private APIConsume Instance;
+        private IRSAEncryption _encrypt;
         public UserController(APIConsume api, ISessionManager sessionManager): base(sessionManager)
         {
-            Instance = api;   
-        }             
-
+            Instance = api;            
+        }
+        /*register api sans crypto
         // GET: User/Create
         //Register
         public ActionResult Create()
@@ -37,6 +38,41 @@ namespace ASPCoreToDo.Controllers
                 if (ModelState.IsValid)
                 {
                     Instance.Post<User>("User/", u);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View(u);
+                }
+            }
+            catch
+            {
+                return View(u);
+            }
+        }
+        */
+
+        // GET: User/Create
+        //Register
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: User/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(RegisterUser u)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    byte[] pwEncrypt;
+                    _encrypt = new RSAEncryption(Instance.Get<byte[]>("Auth"));                                     
+                    pwEncrypt = _encrypt.Encrypt(u.Password);
+                    u.Password = Convert.ToBase64String(pwEncrypt);
+                    Instance.Post<RegisterUser>("User/", u);
                     return RedirectToAction("Index", "Home");
                 }
                 else

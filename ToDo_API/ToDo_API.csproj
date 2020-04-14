@@ -254,6 +254,10 @@
       <Project>{9c80972f-964c-4a2e-9a22-dc5a090fd914}</Project>
       <Name>ToDo_DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ToolBox\ToolBox.csproj">
+      <Project>{7b11cb2b-a215-472b-bdec-c85db5c7d002}</Project>
+      <Name>ToolBox</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ASPCoreToDo.Infrastructure;
+using ToolBox.Cryptography;
 
 namespace ASPCoreToDo
 {
@@ -25,7 +26,8 @@ namespace ASPCoreToDo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSingleton<Uri>(new Uri("https://localhost:44316/api/"));
+            //services.AddSingleton<Uri>(new Uri("https://localhost:44316/api/")); -- api framework sans crypto
+            services.AddSingleton<Uri>(new Uri("http://localhost:49950/api/")); // api crypto
             services.AddSingleton<APIConsume>();
 
             #region Ajout des services pour les Sessions
@@ -39,7 +41,7 @@ namespace ASPCoreToDo
             #endregion
 
             services.AddHttpContextAccessor();
-            services.AddTransient<ISessionManager, SessionManager>();
+            services.AddTransient<ISessionManager, SessionManager>();            
         }
     
 
